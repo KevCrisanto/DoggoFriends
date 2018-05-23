@@ -15,7 +15,7 @@ class DogApi {
       description: map['description'],
       avatarUrl: map['image_url'],
       location: map['location'],
-      likeCounter: map['adopted'],
+      likeCounter: map['likeCounter'],
       isAdopted: map['adopted'],
       pictures: new List<String>.from(map['pictures']),
       attributes: new List<String>.from(map['attributes']),
