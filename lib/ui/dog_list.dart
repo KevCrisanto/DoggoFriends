@@ -1,6 +1,9 @@
 import 'dart:async';
+
 import 'package:doggo_friends/models/dog.dart';
 import 'package:doggo_friends/services/api.dart';
+import 'package:doggo_friends/ui/dog_details/details_page.dart';
+import 'package:doggo_friends/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class DogList extends StatefulWidget {
@@ -23,6 +26,18 @@ class _DogListState extends State<DogList> {
     setState(() {
       _dogs = DogApi.allDogsFromJson(fileData);
     });
+  }
+
+  _navigateToDogDetails(Dog dog, Object avatarTag) {
+    Navigator.of(context).push(new FadePageRoute(
+          builder: (d) {
+            return new DogDetailsPage(
+              dog,
+              avatarTag: avatarTag,
+            );
+          },
+          settings: new RouteSettings(),
+        ));
   }
 
   Widget _getAppTitleWidget() {
@@ -57,7 +72,7 @@ class _DogListState extends State<DogList> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new ListTile(
-              //onTap: //TODO
+              onTap: () => _navigateToDogDetails(dog, index),
               leading: new Hero(
                 tag: index,
                 child: new CircleAvatar(
