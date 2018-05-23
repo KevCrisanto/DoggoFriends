@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:doggo_friends/models/dog.dart';
 import 'package:doggo_friends/services/api.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +20,9 @@ class _DogListState extends State<DogList> {
   _loadDogs() async {
     String fileData =
         await DefaultAssetBundle.of(context).loadString("assets/dogs.json");
-    for (Dog dog in DogApi.allDogsFromJson(fileData)) {
-      _dogs.add(dog);
-    }
-    print(_dogs.toString());
+    setState(() {
+      _dogs = DogApi.allDogsFromJson(fileData);
+    });
   }
 
   Widget _getAppTitleWidget() {
@@ -36,11 +36,71 @@ class _DogListState extends State<DogList> {
     );
   }
 
+  Widget _buildBody() {
+    return new Container(
+      margin: const EdgeInsets.fromLTRB(8.0, 56.0, 8.0, 0.0),
+      child: new Column(
+        children: <Widget>[
+          _getAppTitleWidget(),
+          _getListViewWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDogItem(BuildContext context, int index) {
+    Dog dog = _dogs[index];
+    return new Container(
+      margin: const EdgeInsets.only(top: 5.0),
+      child: new Card(
+        child: new Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new ListTile(
+              //onTap: //TODO
+              leading: new Hero(
+                tag: index,
+                child: new CircleAvatar(
+                  backgroundImage: new NetworkImage(dog.avatarUrl),
+                ),
+              ),
+              title: new Text(
+                dog.name,
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+              subtitle: new Text(dog.description),
+              isThreeLine: true,
+              dense: false,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<Null> refresh() {
+    _loadDogs();
+    return new Future<Null>.value();
+  }
+
+  Widget _getListViewWidget() {
+    return new Flexible(
+        child: new RefreshIndicator(
+      onRefresh: refresh,
+      child: new ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: _dogs.length,
+        itemBuilder: _buildDogItem,
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.blue,
-      body: _getAppTitleWidget(),
+      body: _buildBody(),
     );
   }
 }
