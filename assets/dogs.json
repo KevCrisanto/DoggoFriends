@@ -1,0 +1,75 @@
+{
+  "dogs": [
+    {
+      "name": "Niña",
+      "adopted": true,
+      "id": 1,
+      "pictures": [],
+      "like_counter": 2,
+      "location": "Pomona, CA",
+      "attributes": [
+        "desexed",
+        "microchipped",
+        "vaccinated",
+        "children"
+      ],
+      "description": "If I'm sleeping on you, you cannot move, it is the law 📚",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/Nina.jpg?alt=media&token=a742818f-7bd1-40c5-8914-165766dba19a"
+    },
+    {
+      "name": "Nilo",
+      "adopted": false,
+      "id": 2,
+      "pictures": [
+        "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/Nilo1.jpg?alt=media&token=369c86a5-ab8d-42f9-8e70-079e89c07091",
+        "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/Nilo2.jpg?alt=media&token=33cc72b7-9889-40e3-b1b1-e049218d5faa"
+      ],
+      "like_counter": 4,
+      "location": "Pomona, CA",
+      "attributes": [
+        "desexed",
+        "vaccinated",
+        "microchipped",
+        "children"
+      ],
+      "description": "I'm not just a good boy, I'm the best boy.",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/NiloMain.jpg?alt=media&token=f8e93307-c28d-4740-b393-404a7712ea48"
+    },
+    {
+      "name": "Balu",
+      "adopted": true,
+      "id": 3,
+      "pictures": [
+        "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/balu.jpg?alt=media&token=88587ccc-6778-428b-9c52-12cef55349bd",
+        "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/balu2.jpg?alt=media&token=7619b4df-55b7-4971-84d2-28096cf8bfcc"
+      ],
+      "like_counter": 1,
+      "location": "Pomona, CA",
+      "attributes": [
+        "desexed",
+        "vaccinated",
+        "microchipped"
+      ],
+      "description": "I don't want the ball. Then human says 'who wants the ball?' Then I realize that I want the ball.",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/baluMain.jpg?alt=media&token=b20bf505-9764-4e97-83ea-0f08f5b89380"
+    },
+    {
+      "name": "Venus",
+      "adopted": true,
+      "id": 4,
+      "pictures": [
+        "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/venus.jpg?alt=media&token=6e3259dd-8900-4124-9437-d92db7e98296",
+        "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/venus2.jpg?alt=media&token=08e08731-9300-4dd9-91db-4c5b63374d88"
+      ],
+      "like_counter": 2,
+      "location": "Pomona, CA",
+      "attributes": [
+        "desexed",
+        "vaccinated",
+        "microchipped"
+      ],
+      "description": "I don't mean to always lie down in the most incovenient places, it just kinda happens.",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/doggofriends-98867.appspot.com/o/venusMain.jpg?alt=media&token=3436f06a-dad4-4de9-83c8-c3869016e6b8"
+    }
+  ]
+}
