@@ -114,7 +114,7 @@ class _DogListState extends State<DogList> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.teal,
       body: _buildBody(),
     );
   }
