@@ -20,3 +20,4 @@ flutter:
 
   assets:
     - assets/dogs.json
+    - images/profile_header_background.jpg

@@ -1,4 +1,5 @@
 import 'package:doggo_friends/models/dog.dart';
+import 'package:doggo_friends/ui/dog_details/header/dog_colored_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -16,10 +17,23 @@ class DogDetailsHeader extends StatefulWidget {
 }
 
 class _DogDetailsHeaderState extends State<DogDetailsHeader> {
+  static const BACKGROUND_IMAGE = 'images/profile_header_background.jpg';
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
+    var screenWidth = MediaQuery.of(context).size.width;
+
+    var diagonalBackground = new DiagonallyCutColoredImage(
+      new Image.asset(
+        BACKGROUND_IMAGE,
+        width: screenWidth,
+        height: 280.0,
+        fit: BoxFit.cover,
+      ),
+      color: const Color(0xBB42A5F5),
+    );
 
     var avatar = new Hero(
       tag: widget.avatarTag,
@@ -89,7 +103,7 @@ class _DogDetailsHeaderState extends State<DogDetailsHeader> {
 
     return new Stack(
       children: [
-        //TODO Background Image
+        diagonalBackground,
         new Align(
           alignment: FractionalOffset.bottomCenter,
           heightFactor: 1.4,
