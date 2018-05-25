@@ -1,5 +1,6 @@
 import 'package:doggo_friends/models/dog.dart';
 import 'package:doggo_friends/ui/dog_details/header/details_header.dart';
+import 'package:doggo_friends/ui/dog_details/footer/details_footer.dart';
 import 'package:doggo_friends/ui/dog_details/details_body.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -45,7 +46,7 @@ class _DogDetailsPageState extends State<DogDetailsPage> {
                     padding: const EdgeInsets.all(24.0),
                     child: new DogDetailsBody(widget.dog),
                   ),
-                  // TODO Dog Showcase
+                  new DogShowcase(widget.dog),
                 ],
               ))),
     );
