@@ -7,10 +7,13 @@ class DetailsShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+
     return new Center(
       child: new Text(
-        "Details",
+        dog.description,
         textAlign: TextAlign.center,
+        style: textTheme.subhead.copyWith(color: Colors.white),
       ),
     );
   }
