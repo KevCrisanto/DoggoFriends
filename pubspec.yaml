@@ -5,11 +5,15 @@ dependencies:
   flutter:
     sdk: flutter
 
+  firebase_core: "0.1.2"
+  firebase_auth: "0.5.3"
+  google_sign_in: "3.0.0"
+  cloud_firestore: "0.3.0"
+  font_awesome_flutter:  "6.0.0"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  font_awesome_flutter:  "6.0.0"
 
 flutter:
   uses-material-design: true
