@@ -13,11 +13,22 @@ class DogList extends StatefulWidget {
 
 class _DogListState extends State<DogList> {
   List<Dog> _dogs = [];
+  DogApi _api;
+  NetworkImage _profileImage;
 
   @override
   void initState() {
     super.initState();
     _loadDogs();
+    _loadFromFirebase();
+  }
+
+  _loadFromFirebase() async {
+    final api = await DogApi.signInWithGoogle();
+    setState(() {
+      _api = api;
+      _profileImage = new NetworkImage(api.firebaseUser.photoUrl);
+    });
   }
 
   _loadDogs() async {
@@ -116,6 +127,19 @@ class _DogListState extends State<DogList> {
     return new Scaffold(
       backgroundColor: Colors.teal,
       body: _buildBody(),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: () {
+          // TODO Add something here
+        },
+        tooltip: _api != null
+            ? 'Signed-in: ' + _api.firebaseUser.displayName
+            : 'Not Signed-in',
+        backgroundColor: Colors.green,
+        child: new CircleAvatar(
+          backgroundImage: _profileImage,
+          radius: 50.0,
+        ),
+      ),
     );
   }
 }
