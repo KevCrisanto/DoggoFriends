@@ -19,24 +19,28 @@ class _DogListState extends State<DogList> {
   @override
   void initState() {
     super.initState();
-    _loadDogs();
+    _reloadDogs();
     _loadFromFirebase();
   }
 
   _loadFromFirebase() async {
     final api = await DogApi.signInWithGoogle();
+    final dogs = await api.getAllDogs();
+
     setState(() {
       _api = api;
+      _dogs = dogs;
       _profileImage = new NetworkImage(api.firebaseUser.photoUrl);
     });
   }
 
-  _loadDogs() async {
-    String fileData =
-        await DefaultAssetBundle.of(context).loadString("assets/dogs.json");
-    setState(() {
-      _dogs = DogApi.allDogsFromJson(fileData);
-    });
+  _reloadDogs() async {
+    if (_api != null) {
+      final dogs = await _api.getAllDogs();
+      setState(() {
+        _dogs = dogs;
+      });
+    }
   }
 
   _navigateToDogDetails(Dog dog, Object avatarTag) {
@@ -106,7 +110,7 @@ class _DogListState extends State<DogList> {
   }
 
   Future<Null> refresh() {
-    _loadDogs();
+    _reloadDogs();
     return new Future<Null>.value();
   }
 

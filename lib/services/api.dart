@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:doggo_friends/models/dog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -37,6 +38,37 @@ class DogApi {
     List<Dog> dogs = [];
     json.decode(jsonData)['dogs'].forEach((dog) => dogs.add(_forMap(dog)));
     return dogs;
+  }
+
+  Future<List<Dog>> getAllDogs() async {
+    return (await Firestore.instance.collection('dogs').getDocuments())
+        .documents
+        .map((snapshot) => _fromDocumentSnapshot(snapshot))
+        .toList();
+  }
+
+  StreamSubscription watch(Dog dog, void onChange(Dog dog)) {
+    return Firestore.instance
+        .collection('dogs')
+        .document(dog.documentId)
+        .snapshots()
+        .listen((snapshot) => onChange(_fromDocumentSnapshot(snapshot)));
+  }
+
+  Dog _fromDocumentSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data;
+    return new Dog(
+      documentId: snapshot.documentID,
+      externalId: data['id'],
+      name: data['name'],
+      description: data['description'],
+      avatarUrl: data['image_url'],
+      location: data['location'],
+      likeCounter: data['like_counter'],
+      isAdopted: data['adopted'],
+      pictures: new List<String>.from(data['pictures']),
+      attributes: new List<String>.from(data['attributes']),
+    );
   }
 
   static Dog _forMap(Map<String, dynamic> map) {
