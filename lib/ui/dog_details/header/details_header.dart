@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:doggo_friends/models/dog.dart';
+import 'package:doggo_friends/services/api.dart';
 import 'package:doggo_friends/ui/dog_details/header/dog_colored_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -18,6 +20,64 @@ class DogDetailsHeader extends StatefulWidget {
 
 class _DogDetailsHeaderState extends State<DogDetailsHeader> {
   static const BACKGROUND_IMAGE = 'images/profile_header_background.jpg';
+  bool _likeDisabled = true;
+  String _likeText = "";
+  int _likeCounter = 0;
+  StreamSubscription _watcher;
+
+  Future<DogApi> _api;
+
+  @override
+  void initState() {
+    super.initState();
+    _likeCounter = widget.dog.likeCounter;
+    _api = DogApi.signInWithGoogle();
+    updateLikeState();
+  }
+
+  void likeDog() async {
+    final api = await _api;
+    if (await api.hasLikedDog(widget.dog)) {
+      api.unlikeDog(widget.dog);
+      setState(() {
+        _likeCounter -= 1;
+        _likeText = "LIKE";
+      });
+    } else {
+      api.likeDog(widget.dog);
+      setState(() {
+        _likeCounter += 1;
+        _likeText = "UN-LIKE";
+      });
+    }
+  }
+
+  void updateLikeState() async {
+    final api = await _api;
+    _watcher = api.watch(widget.dog, (dog) {
+      if (mounted) {
+        setState(() {
+          _likeCounter = dog.likeCounter;
+        });
+      }
+    });
+
+    bool liked = await api.hasLikedDog(widget.dog);
+    if (mounted) {
+      setState(() {
+        _likeDisabled = false;
+        _likeText = liked ? "UN-LIKE" : "LIKE";
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_watcher != null) {
+      _watcher.cancel();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +116,7 @@ class _DogDetailsHeaderState extends State<DogDetailsHeader> {
           new Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: new Text(
-              widget.dog.likeCounter.toString(),
+              _likeCounter.toString(),
               style: textTheme.subhead.copyWith(color: Colors.white),
             ),
           ),
@@ -91,10 +151,8 @@ class _DogDetailsHeaderState extends State<DogDetailsHeader> {
               color: Colors.lightGreen,
               disabledColor: Colors.grey,
               textColor: Colors.white,
-              onPressed: () async {
-                //TODO Handle Like
-              },
-              child: new Text('LIKE'),
+              onPressed: _likeDisabled ? null : likeDog,
+              child: new Text(_likeText),
             ),
           ),
         ],

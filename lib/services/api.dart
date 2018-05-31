@@ -55,6 +55,28 @@ class DogApi {
         .listen((snapshot) => onChange(_fromDocumentSnapshot(snapshot)));
   }
 
+  Future likeDog(Dog dog) async {
+    await Firestore.instance
+        .collection('likes')
+        .document('${dog.documentId}:${this.firebaseUser.uid}')
+        .setData({});
+  }
+
+  Future unlikeDog(Dog dog) async {
+    await Firestore.instance
+        .collection('likes')
+        .document('${dog.documentId}:${this.firebaseUser.uid}')
+        .delete();
+  }
+
+  Future<bool> hasLikedDog(Dog dog) async {
+    final like = await Firestore.instance
+        .collection('likes')
+        .document('${dog.documentId}:${this.firebaseUser.uid}')
+        .get();
+    return like.exists;
+  }
+
   Dog _fromDocumentSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data;
     return new Dog(

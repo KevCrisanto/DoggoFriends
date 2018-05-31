@@ -5,8 +5,8 @@
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Allow public read access to all cats.
-    match /cats/{catId} {
+    // Allow public read access to all dogs.
+    match /dogs/{dogId} {
       allow read;
     }
 
@@ -14,7 +14,7 @@ service cloud.firestore {
     match /likes/{likeId} {
       allow create: if isSignedIn()
                        && request.resource.data.size() == 0
-                       && exists(/databases/$(database)/documents/cats/$(catIdFromLikeId(likeId)));
+                       && exists(/databases/$(database)/documents/dogs/$(dogIdFromLikeId(likeId)));
 
       allow get, delete: if isSignedIn()
                             && userIdFromLikeId(likeId) == request.auth.uid;
@@ -24,7 +24,7 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function catIdFromLikeId(likeId) {
+    function dogIdFromLikeId(likeId) {
       return likeId.split(':')[0]
     }
 
